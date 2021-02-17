@@ -1,0 +1,198 @@
+@layout("/common/_container.html",{js:["/assets/modular/index_page.js"]}){
+	<div class="container-main">
+		<div class="cnt-top  flex flex-c-c">
+			<div class="cnt-logo">
+				<img src="${ctxPath}/assets/img/ctn-logo.png" alt="" class="">
+			</div>
+			<div class="cnt-require flex">
+				<div class="req-group flex flex-c-c">
+					<div class="req-field">项目选择</div>
+					<select class="req-ipt">
+						<option value="">江西省/南昌市/艾溪湖公园亮化</option>
+					</select>
+				</div>
+				<div class="req-group flex flex-c-c">
+					<div class="req-field">项目选择</div>
+					<select class="req-ipt ipt-sm">
+						<option value="">配电管理</option>
+					</select>
+				</div>
+				<div class="req-group flex flex-c-c">
+					<div class="req-field">项目选择</div>
+					<select class="req-ipt ipt-sm">
+						<option value="">YCC-600</option>
+					</select>
+				</div>
+			</div>
+			<div class="psn-box flex flex-c-c">
+				<div id="rollbackindex" class="idx-btn flex flex-c-c flex-r-c"><i class="idx-icon"></i><span>首页</span></div>
+				<div class="psn-img">
+					<img src="" alt="" class="">
+				</div>
+				<span class="idx-tc" onclick="">退出</span>
+			</div>
+		</div>
+		<input type="hidden" id="menu_id_zmj" value=${indexid}>
+		<div class="cnt-main flex ">
+			<div class="cnt-menu" id="menu_div_id">
+				<div class="menu-item ">
+					<div class="menu-icnt menu-ifirst" onclick="index_page_Obj.setIframe('/user/userinfo')">
+						<img src="${ctxPath}/assets/img/yhlb.png" alt="" class="menu-icon">
+						<p>用户列表</p>
+					</div>
+				</div>
+				<div class="menu-item ">
+					<div class="menu-icnt menu-ifirst">
+						<img src="${ctxPath}/assets/img/jsgl.png" alt="" class="menu-icon">
+						<p>角色管理</p>
+					</div>
+				</div>
+				<div class="menu-item ">
+					<div class="menu-icnt menu-ifirst" onclick="index_page_Obj.setIframe('/home/config')">
+						<img src="${ctxPath}/assets/img/sypz.png" alt="" class="menu-icon">
+						<p>首页配置</p>
+					</div>
+				</div>
+				<div class="menu-item ">
+					<div class="menu-icnt menu-ifirst">
+						<img src="${ctxPath}/assets/img/dly.png" alt="" class="menu-icon">
+						<p>登录页配置</p>
+					</div>
+				</div>
+				<div class="menu-item ">
+					<div class="menu-icnt menu-ifirst" onclick="index_page_Obj.setIframe('/board')">
+						<img src="${ctxPath}/assets/img/zhkb.png" alt="" class="menu-icon">
+						<p>综合看板</p>
+					</div>
+				</div>
+				<div class="menu-item ">
+					<div class="menu-icnt menu-ifirst" id="znkz1">
+						<img src="${ctxPath}/assets/img/zhkz.png" alt="" class="menu-icon">
+						<p>智能控制</p>
+						<div class="m-xl"></div>
+					</div>
+					<ul class="menu-iul">
+						<li class="menu-item">
+							<div class="menu-icnt menu-isec">
+								<p onclick="index_page_Obj.setIframe('/equip')">设备管理</p>
+							</div>
+						</li>
+						<li class="menu-item">
+							<div class="menu-icnt menu-isec">
+								<p onclick="index_page_Obj.setIframe('/equipGroup')">分组管理</p>
+							</div>
+						</li>
+						<li class="menu-item">
+							<div class="menu-icnt menu-isec">
+								<p onclick="index_page_Obj.setIframe('/scene')">场景模式</p>
+							</div>
+						</li>
+						<li class="menu-item">
+							<div class="menu-icnt menu-isec">
+								<p onclick="index_page_Obj.setIframe('/automation')">自动化模式</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="menu-item ">
+					<div class="menu-icnt menu-ifirst"id="wbgl1">
+						<img src="${ctxPath}/assets/img/zhkz.png" alt="" class="menu-icon">
+						<p>维保管理</p>
+						<div class="m-xl"></div>
+					</div>
+					<ul class="menu-iul">
+						<li class="menu-item">
+							<div class="menu-icnt menu-isec" id="wbgl2">
+								<p>告警管理</p>
+								<div class="m-xl"></div>
+							</div>
+							<ul class="menu-iul">
+								<li class="menu-ithird" onclick="index_page_Obj.setIframe('/alarm/alarmInfo')">告警列表</li>
+								<li class="menu-ithird" onclick="index_page_Obj.setIframe('/alarmConfig')">告警配置</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="menu-iul">
+						<li class="menu-item" onclick="index_page_Obj.setIframe('/workOrder')">
+							<div class="menu-icnt menu-isec">
+								<p>工单管理</p>
+								<div class="m-xl"></div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="menu-item ">
+					<div class="menu-icnt menu-ifirst" id="nhgl1">
+						<img src="${ctxPath}/assets/img/zhkb.png" alt="" class="menu-icon">
+						<p>能耗管理</p>
+					</div>
+					<ul class="menu-iul">
+						<li class="menu-item">
+							<div class="menu-icnt menu-isec">
+								<p onclick="index_page_Obj.setIframe('/energy/statistics')">能耗统计</p>
+							</div>
+						</li>
+						<li class="menu-item">
+							<div class="menu-icnt menu-isec">
+								<p onclick="index_page_Obj.setIframe('/energy/analysis')">能耗分析</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="menu-item ">
+					<div class="menu-icnt menu-ifirst" onclick="index_page_Obj.setIframe('/map')" id="dtyd1">
+						<img src="${ctxPath}/assets/img/zhkb.png" alt="" class="menu-icon">
+						<p>地图导引</p>
+					</div>
+				</div>
+				<div class="menu-item ">
+					<div class="menu-icnt menu-ifirst" onclick="index_page_Obj.setIframe('/statement')">
+						<img src="${ctxPath}/assets/img/zhkb.png" alt="" class="menu-icon">
+						<p>统计报表</p>
+					</div>
+				</div>
+				<div class="menu-item ">
+					<div class="menu-icnt menu-ifirst" onclick="index_page_Obj.setIframe('/asset')">
+						<img src="${ctxPath}/assets/img/zhkb.png" alt="" class="menu-icon">
+						<p>资产管理</p>
+					</div>
+				</div>
+				<div class="menu-item ">
+					<div class="menu-icnt menu-ifirst" id="jkgl1">
+						<img src="${ctxPath}/assets/img/zhkb.png" alt="" class="menu-icon">
+						<p>监控管理</p>
+						<div class="m-xl"></div>
+					</div>
+					<ul class="menu-iul">
+						<li class="menu-item">
+							<div class="menu-icnt menu-isec" id="jkgl2">
+								<p>监控管理</p>
+								<div class="m-xl"></div>
+							</div>
+							<ul class="menu-iul">
+								<li class="menu-ithird" onclick="index_page_Obj.setIframe('/recordTrack')">记录跟踪</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<div class="menu-item ">
+					<div class="menu-icnt menu-ifirst">
+						<img src="${ctxPath}/assets/img/zhkb.png" alt="" class="menu-icon">
+						<p>系统管理</p>
+						<div class="m-xl"></div>
+					</div>
+					<ul class="menu-iul">
+						<li class="menu-item">
+							<div class="menu-icnt menu-isec">
+								<p onclick="index_page_Obj.setIframe('/menu')">菜单管理</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="cnt-iframe flex-1">
+				<iframe src="" frameborder="0" class="r-iframe"></iframe>
+			</div>
+		</div>
+    </div>
+@}

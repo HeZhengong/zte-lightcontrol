@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.hzy_User.mapper.HzyUserMapper">
+
+
+    <resultMap id="HzyUserResultMap" type="cn.stylefeng.guns.modular.hzy_User.entity.HzyUser">
+        <id column="user_Id" property="userId"/>
+        <id column="account" property="account"/>
+        <id column="password" property="password"/>
+        <id column="name" property="name"/>
+        <id column="birthday" property="birthday"/>
+        <id column="sex" property="sex"/>
+        <id column="email" property="email"/>
+        <id column="phone" property="phone"/>
+        <id column="role_Id" property="roleId"/>
+        <id column="dept_Id" property="deptId"/>
+        <id column="status" property="status"/>
+        <id column="avatar" property="avatar"/>
+        <id column="salt" property="salt"/>
+        <id column="version" property="version"/>
+        <id column="remark" property="remark"/>
+        <id column="create_time" property="createTime"/>
+        <id column="create_user" property="createUser"/>
+        <id column="update_time" property="updateTime"/>
+        <id column="update_user" property="updateUser"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        user_id AS "userId", avatar AS "avatar", account AS "account", salt AS "salt", name AS "name", birthday AS "birthday", sex AS "sex", email AS "email", phone AS "phone", role_id AS "roleId", dept_id AS "deptId", status AS "status", create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser", version AS "version", remark AS "remark"
+    </sql>
+
+    <sql id="Base_Column_List_With_Pwd">
+		 user_id AS "userId", avatar AS "avatar", account AS "account", salt AS "salt", password AS "password", name AS "name", birthday AS "birthday", sex AS "sex", email AS "email", phone AS "phone", role_id AS "roleId", dept_id AS "deptId", status AS "status", create_time AS "createTime", create_user AS "createUser", update_time AS "updateTime", update_user AS "updateUser", version AS "version"
+	</sql>
+
+    <select id="selectUsers" resultType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from hzy_user
+        where status != 'DELETED'
+        <if test="name != null and name != ''">
+            and (phone like CONCAT('%',#{name},'%')
+            or account like CONCAT('%',#{name},'%')
+            or name like CONCAT('%',#{name},'%'))
+        </if>
+        <if test="deptId != null and deptId != 0">
+            and (dept_id = #{deptId} or dept_id in ( select dept_id from sys_dept where pids like CONCAT('%$[', #{deptId}, '$]%') escape '$' ))
+        </if>
+        <if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
+            and (create_time between CONCAT(#{beginTime},' 00:00:00') and CONCAT(#{endTime},' 23:59:59'))
+        </if>
+    </select>
+
+    <select id="selectUsers2" resultType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from hzy_user
+        where status != 'DELETED'
+        <if test="name != null and name != ''">
+            and (phone like CONCAT('%',#{name},'%')
+            or account like CONCAT('%',#{name},'%')
+            or name like CONCAT('%',#{name},'%'))
+        </if>
+        <if test="deptId != null and deptId != 0">
+            and (dept_id = #{deptId} or dept_id in ( select dept_id from sys_dept where pids like CONCAT('%$[', #{deptId}, '$]%') escape '$' ))
+        </if>
+        <if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
+            and (create_time between CONCAT(#{beginTime},' 00:00:00') and CONCAT(#{endTime},' 23:59:59'))
+        </if>
+        <if test="account != null and account != ''">
+            and account like CONCAT('%',#{account},'%')
+        </if>
+        <if test="phone != null and phone != ''">
+            and phone like CONCAT('%',#{phone},'%')
+        </if>
+        <if test="roleId != null">
+            and role_id = #{roleId}
+        </if>
+    </select>
+
+    <select id="selectUsers3" resultType="cn.stylefeng.guns.modular.hzy_User.entity.HzyUser">
+        SELECT
+        user_id,
+        account,
+        s1.NAME,
+        phone,
+        email,
+        s2.name roleName
+        FROM
+        hzy_user s1, sys_role s2
+        WHERE
+        STATUS != 'DELETED'
+        and s1.role_id = s2.role_id
+        <if test="account != null and account != ''">
+            and account like CONCAT('%',#{account},'%')
+        </if>
+        <if test="phone != null and phone != ''">
+            and phone like CONCAT('%',#{phone},'%')
+        </if>
+        <if test="roleId != null">
+            and s1.role_id = #{roleId}
+        </if>
+    </select>
+
+    <select id="selectUsers" resultType="map" databaseId="oracle">
+        select
+        <include refid="Base_Column_List"/>
+        from hzy_user
+        where status != 'DELETED'
+        <if test="name != null and name != ''">
+            and (phone like '%' || #{name} || '%'
+            or account like '%' || #{name} || '%'
+            or name like '%' || #{name} || '%')
+        </if>
+        <if test="deptId != null and deptId != 0">
+            and (dept_id = #{deptId} or dept_id in ( select dept_id from sys_dept where pids like '%[' || #{deptId} || ']%'))
+        </if>
+        <if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
+            and create_time &gt;= to_date(#{beginTime}||'00:00:00','yyyy-mm-dd hh24:mi:ss')
+            and create_time &lt;= to_date(#{endTime}||'23:59:59','yyyy-mm-dd hh24:mi:ss')
+        </if>
+    </select>
+
+    <select id="selectUsersByRole" resultType="map">
+        select
+        user_id AS "userId", avatar AS "avatar", account AS "account", salt AS "salt", u.name AS "name", birthday AS "birthday"
+        , sex AS "sex", email AS "email", phone AS "phone", u.role_id AS "roleId", dept_id AS "deptId", u.status AS "status"
+        , u.create_time AS "createTime", u.create_user AS "createUser", u.update_time AS "updateTime", u.update_user AS "updateUser", u.version AS "version"
+        from hzy_user u
+        where u.status != 'DELETED'
+        <if test="name != null and name != ''">
+            and (u.phone like CONCAT('%',#{name},'%')
+            or u.account like CONCAT('%',#{name},'%')
+            or u.name like CONCAT('%',#{name},'%'))
+        </if>
+        <if test="roleId != null and roleId != 0">
+            and u.role_id like CONCAT('%',#{roleId},'%')
+        </if>
+        <if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
+            and (u.create_time between CONCAT(#{beginTime},' 00:00:00') and CONCAT(#{endTime},' 23:59:59'))
+        </if>
+    </select>
+
+    <update id="setStatus">
+		update hzy_user set status = #{status} where user_id = #{userId}
+	</update>
+
+    <update id="changePwd">
+		update hzy_user set password = #{pwd} where user_id = #{userId}
+	</update>
+
+    <update id="setRoles">
+		update hzy_user set role_id = #{roleIds} where user_id =
+		#{userId}
+	</update>
+
+    <select id="getByAccount" resultType="cn.stylefeng.guns.modular.hzy_User.entity.HzyUser">
+        select
+        <include refid="Base_Column_List_With_Pwd"/>
+        from hzy_user where account = #{account} and status != 'DELETED'
+    </select>
+
+    <select id="listUserAndRoleExpectAdmin" resultType="map">
+        select
+        user.account as account,
+        user.name as name,
+        dept.simple_name as simpleName
+        from hzy_user user
+        left join sys_dept dept on user.dept_id = dept.dept_id
+    </select>
+
+    <select id="listRole" resultType="map">
+        SELECT
+            role_id roleId,
+            name name
+        FROM
+            sys_role
+    </select>
+
+
+
+
+</mapper>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.statement.mapper.StatementMapper">
+
+    <select id="selectListEquip" parameterType="java.lang.String"
+            resultType="cn.stylefeng.guns.modular.statement.entity.StatementEquipEntity">
+        SELECT
+            t.id,
+            t.name,
+            t.no,
+            t.type,
+            t.mac,
+            t.distributionBox,
+            t.boxStatus,
+            t.internetCard,
+            t.latitude,
+            t.longitude,
+            t.status,
+            t.path,
+            t.model,
+            t.loopCount,
+            t.createTime,
+            t.updateTime,
+            t.createUser,
+            t.updateUser
+        from t_equip t
+        <where>
+            <if test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+                and (createTime between CONCAT(#{startTime},' 00:00:00') and CONCAT(#{endTime},' 23:59:59'))
+            </if>
+        </where>
+        order by t.createTime desc
+    </select>
+
+    <select id="selectListEnergy" parameterType="java.lang.String"
+            resultType="cn.stylefeng.guns.modular.analysis.entity.AnalysisEntity">
+        SELECT
+            z_energy.id,
+            theory_electricity,
+            actual_electricity,
+            save_electricity,
+            save_water,
+            CO2,
+            SO2,
+            save_derv,
+            save_coal,
+            z_energy.create_time,
+            z_energy.update_time,
+            z_energy.del
+        FROM
+            z_energy
+        WHERE
+            z_energy.del != 1
+        AND
+            (z_energy.create_time between CONCAT(#{startTime},' 00:00:00') and CONCAT(#{endTime},' 23:59:59'))
+        ORDER BY
+            z_energy.create_time ASC
+    </select>
+
+
+    <select id="selectListAlarm" parameterType="java.lang.String"
+            resultType="cn.stylefeng.guns.modular.statement.entity.StatementAlarmEntity">
+        SELECT
+            a.alarmDate,
+            a.alarmCategory,
+            a.deviceName,
+            a.describe,
+            a.infrom,
+
+            a.disposeDate,
+            a.disposeStatus
+
+        FROM
+            alarm_list a
+
+        WHERE
+            del = 0
+        AND
+            (a.alarmDate between CONCAT(#{startTime},' 00:00:00') and CONCAT(#{endTime},' 23:59:59'))
+        ORDER BY
+            a.alarmDate ASC
+    </select>
+
+    <select id="selectListWorkOrder" parameterType="java.lang.String"
+            resultType="cn.stylefeng.guns.modular.statement.entity.StatementWorkOrderEntity">
+        SELECT
+            a.id,
+            a.address,
+            a.describe,
+            a.completionTime,
+            u.name,
+            a.disposeStatus,
+            a.createDate
+
+        FROM
+            work_order a
+            LEFT JOIN sys_user u ON a.handingId = u.user_id
+        WHERE
+            a.del = 0
+        AND
+            (a.createDate between CONCAT(#{startTime},' 00:00:00') and CONCAT(#{endTime},' 23:59:59'))
+        ORDER BY
+            a.createDate ASC
+    </select>
+
+</mapper>

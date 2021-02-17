@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>城市光环境管控云平台</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<script type="text/javascript" src="${ctxPath}/assets/js/jquery-1.11.0.min.js"></script>
+	<link rel="stylesheet" href="${ctxPath}/assets/css/index.css">
+	<style></style>
+</head>
+<body>
+	<div class="ifr-content">
+		<div class="ifr-tit flex flex-c-c">
+			<span>智能控制-分组管理</span>
+		</div>
+		<div class="ifr-main flex">
+			<div class="ifr-left">
+					<div class="fz-ob flex flex-c-c">
+						<span class="fz-name flex-1">分组列表</span>
+						<div class="fz-btn flex flex-c-c flex-r-c">
+							<span>添加</span>
+							<div class="fz-add"></div>
+						</div>
+					</div>
+					<div class="fz-li-box">
+						<div class="fz-li flex flex-c-c flex-r-c">
+							<span>未分组</span>
+							<div class="pz-edit"></div>
+						</div>
+						<div class="fz-li on flex flex-c-c flex-r-c">
+							<span>未分组</span>
+							<div class="pz-edit"></div>
+						</div>
+					</div>
+				</div>
+				<div class="ifr-right flex-1">
+					<table class="ifr-table">
+						<colgroup>
+							<col width="12%">
+							<col width="12%">
+							<col width="12%">
+							<col width="12%">
+							<col width="12%">
+							<col width="40%">
+						</colgroup>
+						<tr>
+							<th>分组</th>
+							<th>分组</th>
+							<th>分组</th>
+							<th>分组</th>
+							<th>分组</th>
+							<th>操作</th>
+						</tr>
+						<tr>
+							<td>分组</td>
+							<td>分组</td>
+							<td>分组</td>
+							<td>分组</td>
+							<td>分组</td>
+							<td>
+								<button class="btn-g">打开</button>
+								<button class="btn-g">关闭</button>
+								<button class="btn-r">移除</button>
+								<button class="btn-b">移动到</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+		</div>
+		
+		<div class="modal">
+			<div class="modal-cnt modal-fz">
+				<div class="modal-tit">编辑分组</div>
+				<div class="modal-main">
+					<table class="ifr-g-box" style="width: 92%;margin-top:30px;">
+						<tr>
+							<td>分组名称</td>
+							<td><input type="text" class="fm-input"></td>
+						</tr>
+					</table>
+					<div class="fm-btn-box flex flex-c-c">
+						<button class="btn-del">删除</button>
+						<button class="btn-save">保存</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+</script>
+</html>

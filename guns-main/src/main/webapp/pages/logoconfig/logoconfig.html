@@ -1,0 +1,103 @@
+@layout("/common/_container.html",{js:["/assets/modular/logoconfig/logoconfig.js"]}){
+<div class="ifr-content">
+	<div class="ifr-tit flex flex-c-c">
+		<span>智能控制-首页配置</span>
+	</div>
+	<div class="ifr-main">
+		<div class="ifr-form">
+			<table class="ifr-g-box">
+				<tr>
+					<td>名称</td>
+					<td><input type="text" name="projectName" class="fm-input"></td>
+				</tr>
+				<tr>
+					<td>LOGO</td>
+					<td>
+						<img id="logo" src="img/login-logo.png" alt="" class="fm-sm-img">
+						<input type="hidden" name="logoPath">
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">背景图</td>
+					<td>
+						<img id="bg" src="img/login-bg.png" alt="" class="fm-lg-img">
+						<input type="hidden" name="backgroundPath">
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">版权信息</td>
+					<td><input type="text" class="fm-input" name="copyright"></td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">更新信息</td>
+					<td><button class="btn-save" onclick="homeInfoObj.saveInfo()">保存</button></td>
+				</tr>
+				<!--<tr>
+					<td style="vertical-align: top;">导航编辑</td>
+					<td>
+						<div class="fm-pzbox flex flex-wrap">
+							<div class="fm-pz-item flex flex-c-c">
+								<div class="pz-edit"></div>
+								<p class="flex-1">综合看板</p>
+								<div class="pz-del"></div>
+							</div>
+							<div class="fm-pz-item flex flex-c-c">
+								<div class="pz-edit"></div>
+								<p class="flex-1">智能控制</p>
+								<div class="pz-del"></div>
+							</div>
+							<div class="fm-pz-item flex flex-c-c">
+								<div class="pz-edit"></div>
+								<p class="flex-1">维保管理</p>
+								<div class="pz-del"></div>
+							</div>
+							<div class="fm-pz-item flex flex-c-c">
+								<div class="pz-edit"></div>
+								<p class="flex-1">地图导引</p>
+								<div class="pz-del"></div>
+							</div>
+							<div class="fm-pz-item flex flex-c-c">
+								<div class="pz-edit"></div>
+								<p class="flex-1">能耗统计</p>
+								<div class="pz-del"></div>
+							</div>
+							<div class="fm-pz-add flex flex-c-c flex-r-c">
+								<img src="img/add.png" alt="" class="pz-add">
+							</div>
+						</div>
+					</td>
+				</tr>-->
+			</table>
+
+		</div>
+	</div>
+	<!--<div class="modal">
+		<div class="mask" style="position:fixed;left:0;right: 0;top:0;bottom: 0;z-index: 9998"></div>
+		<div class="modal-cnt modal-form">
+			<div class="modal-tit">编辑</div>
+			<div class="modal-main">
+				<table class="ifr-g-box" style="width: 85%;margin-top: 45px;">
+					<tr>
+						<td>图标</td>
+						<td>
+							<img src="img/login-logo.png" alt="" class="fm-sm-img">
+						</td>
+					</tr>
+					<tr>
+						<td>名称</td>
+						<td><input type="text" class="fm-input"></td>
+					</tr>
+					<tr>
+						<td>关联地址</td>
+						<td><input type="text" class="fm-input"></td>
+					</tr>
+				</table>
+				<div class="fm-btn-box flex flex-r-c">
+					<button class="btn-no">取消</button>
+					<button class="btn-save">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>-->
+</div>
+@}

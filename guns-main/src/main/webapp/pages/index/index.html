@@ -1,0 +1,62 @@
+@layout("/common/_container.html",{js:["/assets/modular/index/index.js"]}){
+	<div class="login-main" id="login-main" style='background-image: url(http://localhost:8081/home/config/seeImg/${logoMap.background_path!""});'>
+		<div class="lgt-box flex flex-c-c flex-r-c" style="margin-bottom: 7.68rem">
+			<img src='/home/config/seeImg/${logoMap.logo_path!""}' alt="" class="login-logo">
+			<img src="/assets/img/login-font.png" alt="" class="login-font">
+		</div>
+		<div class="index-box flex flex-c-c flex-r-c">
+			@if(shiro.hasPermission("#")){
+			<div class="index-item" id="zhkb">
+				<div class="index-img flex flex-c-c flex-r-c"><img src="" alt="" class=""></div>
+				<div class="index-tit">综合看板</div>
+			</div>
+			@}
+			@if(shiro.hasPermission("#")){
+			<div class="index-item" id="znkz">
+				<div class="index-img flex flex-c-c flex-r-c"><img src="" alt="" class=""></div>
+				<div class="index-tit">智能控制</div>
+			</div>
+			@}
+			@if(shiro.hasPermission("#")){
+			<div class="index-item" id="wbgl">
+				<div class="index-img flex flex-c-c flex-r-c"><img src="" alt="" class=""></div>
+				<div class="index-tit">维保管理</div>
+			</div>
+			@}
+			@if(shiro.hasPermission("#")){
+			<div class="index-item" id="nhgl">
+				<div class="index-img flex flex-c-c flex-r-c"><img src="" alt="" class=""></div>
+				<div class="index-tit">能耗管理</div>
+			</div>
+			@}
+		</div>
+		<div class="index-box flex flex-c-c flex-r-c">
+			@if(shiro.hasPermission("#")){
+			<div class="index-item" id="dtyd">
+				<div class="index-img flex flex-c-c flex-r-c"><img src="" alt="" class=""></div>
+				<div class="index-tit">地图导引</div>
+			</div>
+			@}
+			@if(shiro.hasPermission("#")){
+			<div class="index-item" id="tjbb">
+				<div class="index-img flex flex-c-c flex-r-c"><img src="" alt="" class=""></div>
+				<div class="index-tit">统计报表</div>
+			</div>
+			@}
+			@if(shiro.hasPermission("#")){
+			<div class="index-item" id="zcgl">
+				<div class="index-img flex flex-c-c flex-r-c"><img src="" alt="" class=""></div>
+				<div class="index-tit">资产管理</div>
+			</div>
+			@}
+			@if(shiro.hasPermission("#")){
+			<div class="index-item" id="jkgl">
+				<div class="index-img flex flex-c-c flex-r-c"><img src="" alt="" class=""></div>
+				<div class="index-tit">监控管理</div>
+			</div>
+			@}
+		</div>
+
+		<div class="lgm-p">${logoMap.copyright!}</div>
+    </div>
+@}

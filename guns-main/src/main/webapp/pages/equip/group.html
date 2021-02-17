@@ -1,0 +1,77 @@
+@layout("/common/_container.html",{js:["/assets/modular/equip/group.js"]}){
+<script type="text/javascript" src="${ctxPath}/assets/js/jquery-1.11.0.min.js?v=${constants.getReleaseVersion()}"></script>
+<style>
+    .layui-table-cell {overflow: visible !important;}
+
+    td .layui-form-select{
+        margin-top: -10px;
+        margin-left: -15px;
+        margin-right: -15px;
+    }
+
+    .fz-li span{min-width: 5rem;}
+</style>
+<div class="ifr-content" id="myContiner">
+    <div class="ifr-tit flex flex-c-c">
+        <span>智能控制-分组管理</span>
+        <div class="sch-box flex flex-c-c">
+            <input type="text" id="search_name" class="flex-1" placeholder="请输入回路名称">
+            <div id="btnSearch" class="sc-btn">搜索</div>
+        </div>
+        <div style="float: right">
+            <button class="btn-g" onclick="infoObj.batchUpdateLoopStatus(1,'启动')">启动自动</button>
+            <button class="btn-g" onclick="infoObj.batchUpdateLoopStatus(1,'打开')">打开</button>
+            <button class="btn-w" onclick="infoObj.batchUpdateLoopStatus(0,'关闭')">关闭</button>
+        </div>
+    </div>
+    <div class="ifr-main flex">
+        <input type="hidden" id="groupId">
+        <div class="ifr-left">
+            <div class="fz-ob flex flex-c-c">
+                <span class="fz-name flex-1">分组列表</span>
+                <div class="fz-btn flex flex-c-c flex-r-c" id="btnAdd">
+                    <span>添加</span>
+                    <div class="fz-add"></div>
+                </div>
+            </div>
+            <div class="fz-li-box" id="groupList">  </div>
+        </div>
+        <div class="ifr-right flex-1">
+            <table class="ifr-table" id="listTable" lay-filter="listTable"></table>
+        </div>
+    </div>
+    <div class="modal" id="modal" style="display: none">
+        <div class="modal-cnt modal-fz">
+            <div class="modal-tit">编辑分组</div>
+            <div class="modal-main">
+                <table class="ifr-g-box" style="width: 92%;margin-top:30px;">
+                    <input type="hidden" name="id">
+                    <tr>
+                        <td>分组名称</td>
+                        <td><input type="text" name="name" class="fm-input"></td>
+                    </tr>
+                </table>
+                <div class="fm-btn-box flex flex-c-c">
+                    <button class="btn-no">取消</button>
+                    <button class="btn-del" style="display: none">删除</button>
+                    <button class="btn-save">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/html" id="tableBar">
+        <button class="btn-wy" lay-event="open">打开</button>
+        <button class="btn-wy" lay-event="close">关闭</button>
+        {{# if(d.groupId != 1){ }}
+        <button class="btn-wy" lay-event="remove">移除</button>
+        {{# } }}
+    </script>
+
+    <script type="text/html" id="selectTool" desc="下拉选择器" intro="用到了layui模板（不能设置lay-ignore,否则监听不到事件）">
+        <select name="groupId" dataId="{{d.id}}" dataValue="{{d.groupId}}" lay-filter="selectGroup"></select>
+    </script>
+
+</div>
+
+@}

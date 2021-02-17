@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.alarm.mapper.AlarmMapper">
+    <select id="findList" resultType="cn.stylefeng.guns.modular.alarm.entity.AlarmEntity">
+        select * from alarm_list
+        where del=0 and disposeStatus=0 and switchWork=0
+        <if test="alarmEntity.alarmDate!=null">
+            and cast(alarmDate as date)=#{alarmEntity.alarmDate}
+        </if>
+        <if test="alarmEntity.alarmCategory!=null and alarmEntity.alarmCategory!=''">
+            and alarmCategory=#{alarmEntity.alarmCategory}
+        </if>
+    </select>
+
+    <select id="findDispose" resultType="cn.stylefeng.guns.modular.alarm.entity.AlarmEntity">
+        select * from alarm_list
+        where del=0 and disposeStatus=1 and switchWork=0
+        <if test="alarmEntity.alarmDate!=null">
+            and cast(alarmDate as date)=#{alarmEntity.alarmDate}
+        </if>
+        <if test="alarmEntity.alarmCategory!=null and alarmEntity.alarmCategory!=''">
+            and alarmCategory=#{alarmEntity.alarmCategory}
+        </if>
+    </select>
+
+    <select id="findDeleted" resultType="cn.stylefeng.guns.modular.alarm.entity.AlarmEntity">
+        select * from alarm_list
+        where del=1 and switchWork=0
+        <if test="alarmEntity.alarmDate!=null">
+            and cast(alarmDate as date)=#{alarmDate}
+        </if>
+        <if test="alarmEntity.alarmCategory!=null and alarmEntity.alarmCategory!=''">
+            and alarmCategory=#{alarmCategory}
+        </if>
+    </select>
+
+    <update id="delAlarm" parameterType="string">
+        update alarm_list set del=1 where id=#{id}
+    </update>
+
+    <update id="restoreAlarm" parameterType="string">
+        update alarm_list set del=0 where id=#{id}
+    </update>
+
+    <update id="disposeAlarm" parameterType="cn.stylefeng.guns.modular.alarm.entity.AlarmEntity">
+        update alarm_list set
+        disposeStatus=1,
+        alarmCause=#{alarmCause},
+        disposeDate=NOW()
+        where id=#{id}
+    </update>
+    
+    <update id="switchWork" parameterType="string">
+        update alarm_list set
+        switchWork=1 where
+        id=#{switchId}
+    </update>
+</mapper>

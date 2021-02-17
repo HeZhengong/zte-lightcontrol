@@ -1,0 +1,107 @@
+@layout("/common/_container.html",{js:["/assets/modular/assetmanager/assetmanager.js"]}){
+	<div class="ifr-content">
+		<div class="ifr-tit flex flex-c-c">
+			<span>智能控制-资产管理</span>
+			<button id="user_edit" onclick="userInfoObj.openModalOfAddUser()" class="btn-g" style="    margin-left: 2.5rem;"><i class="layui-icon">&#xe654;</i>新增</button>
+			<button id="user_export" onclick="userInfoObj.exportUserInfo()" class="btn-g"><i class="layui-icon">&#xe654;</i>导出</button>
+		</div>
+		<div class="ifr-main flex">
+			<div class="ifr-left">
+				<div class="fz-li-box fz-box1">
+					<!--<div class="fz-li flex flex-c-c flex-r-c">
+						<span>未分组</span>
+						<ul class="fz-sc-ul">
+							<li class="fz-sc-li">
+								<span>未分组</span>
+							</li>
+							<li class="fz-sc-li">
+								<span>未分组</span>
+							</li>
+							<li class="fz-sc-li fcli-add">
+								<span>添加</span>
+							</li>
+						</ul>
+					</div>
+					<div class="fz-li flex flex-c-c flex-r-c">
+						<span>未分组</span>
+					</div>
+					<div class="fz-li flex flex-c-c flex-r-c">
+						<span>未分组</span>
+					</div>
+					<div class="fz-li flex flex-c-c flex-r-c">
+						<span>未分组</span>
+					</div>-->
+					<div class="fz-li flex flex-c-c flex-r-c fli-add" onclick="assetObj.addOfParentBtn()">
+						<span>添加</span>
+					</div>
+				</div>
+			</div>
+			<div class="ifr-right flex-1" style="padding:0 8rem 0.6rem 0;position: relative;">
+				<table class="ifr-table pz-table" id="my-table" style="table-layout: fixed;">
+					<tr>
+						<th id="tr-first">未命名</th>
+
+					</tr>
+
+				</table>
+				<button class="tb-add-btn col-btn" style="position: absolute;right: 0;top:0">添加列</button>
+				<button class="tb-add-btn row-btn" >添加行</button>
+				<!--<button class="tb-add-btn row-btn-1" >添加</button>-->
+			</div>
+		</div>
+
+		<div class="modal" id="modal" style="display: none;">
+			<div class="mask" style="position:fixed;left:0;right: 0;top:0;bottom: 0;z-index: 9998"></div>
+			<div class="modal-cnt modal-fz" style="height: 27rem;width: 27rem;">
+				<div class="modal-tit">编辑分组</div>
+				<div class="modal-main">
+					<table class="ifr-g-box" style="width: 92%;margin-top:30px;">
+						<input type="hidden" name="type">
+						<tr>
+							<td>资产类型编号</td>
+							<td><input type="text" name="no" class="fm-input"></td>
+						</tr>
+						<tr>
+							<td>资产项目名称</td>
+							<td><input type="text" name="label" class="fm-input"></td>
+						</tr>
+						<tr>
+							<td>排序</td>
+							<td><input type="text" name="weight" class="fm-input"></td>
+						</tr>
+					</table>
+					<div class="fm-btn-box flex flex-c-c">
+						<button class="btn-no" id="btn-no" onclick="assetObj.noBtn()">取消</button>
+						<button class="btn-del" id="btn-del" onclick="assetObj.delBtn()" style="display: none">删除</button>
+						<button class="btn-save" id="btn-save" onclick="assetObj.saveOrEditBtn()">保存</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<input type="hidden" name="parent">
+		<input type="hidden" name="table_parent">
+
+		<div class="modal" id="modal-col" style="display: none">
+			<div class="modal-cnt modal-fz">
+				<div class="modal-tit">添加列名</div>
+				<div class="modal-main">
+					<table class="ifr-g-box" style="width: 92%;margin-top:30px;">
+						<input type="hidden" name="table_type">
+						<tr>
+							<td id="cell-name">列名名称</td>
+							<td><input type="text" name="col_label" class="fm-input"></td>
+						</tr>
+					</table>
+					<div class="fm-btn-box flex flex-c-c">
+						<button class="btn-no" id="col-btn-no">取消</button>
+						<button class="btn-del" id="col-btn-del" style="display: none">删除</button>
+						<button class="btn-save" id="col-btn-save">保存</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+@}

@@ -1,0 +1,41 @@
+@layout("/common/_container.html",{js:["/assets/modular/energy/statistics/statistics.js"]}){
+
+<script src="${ctxPath}/assets/common/libs/echarts/echarts.min.js?v=${constants.getReleaseVersion()}"></script>
+
+	<div class="ifr-content">
+		<div class="ifr-tit flex flex-c-c">
+			<span>能耗管理-能耗统计</span>
+		</div>
+		<div class="ifr-main">
+				<div class="zn-tn-box flex" >
+					<div class="zn-top flex-1 flex flex-c-c">
+						<div class="zn-group">
+							<span>展示方式</span>
+							<select class="req-ipt" id="statisticsType">
+								<option value="bar" selected>柱形图</option>
+								<option value="line">折线图</option>
+							</select>
+							<span>统计方式</span>
+							<select class="req-ipt" id="statisticsTime">
+								<option value="day" selected>按天统计</option>
+								<option value="week">按周统计</option>
+								<option value="month">按月统计</option>
+								<option value="year">按年统计</option>
+							</select>
+							<span>日期筛选</span>
+							<input type="text" id="statisticsDate" onfocus="this.blur()" class="req-ipt" placeholder="请选择时间">
+						</div>
+					</div>
+				</div>
+				<div class="ifr-right flex-1" id="showMain">
+					<!--折线图 开始-->
+					<!--折线图 结束-->
+
+					<!--柱形图 开始-->
+					<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+					<div id="main" style="height: 585px;width: 1100px;"></div>
+					<!--柱形图 结束-->
+				</div>
+		</div>
+	</div>
+@}

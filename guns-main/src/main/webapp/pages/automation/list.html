@@ -1,0 +1,43 @@
+@layout("/common/_container.html",{js:["/assets/modular/automation/list.js"]}){
+<script type="text/javascript" src="${ctxPath}/assets/js/jquery-1.11.0.min.js?v=${constants.getReleaseVersion()}"></script>
+<div class="ifr-content" id="myContiner">
+    <div class="ifr-tit flex flex-c-c">
+        <span>智能控制-自动化模式</span>
+        <div class="sch-box flex flex-c-c">
+            <input type="text" id="search_name" class="flex-1" placeholder="请输入自动化名称">
+            <div id="btnSearch" class="sc-btn">搜索</div>
+        </div>
+        <div class="flex-1"></div>
+        <button  id="btnAdd" class="btn-g"><i class="layui-icon"></i>添加自动化</button>
+    </div>
+    <div class="ifr-main flex flex-wrap" id="picPage"></div>
+</div>
+
+<div class="modal" id="editModal" style="display: none">
+    <div class="modal-cnt modal-form2">
+        <div class="modal-tit">编辑自动化</div>
+        <div class="modal-main" style="overflow: auto;">
+            <table class="zn-t-table1" style="margin: 2rem auto">
+                <input type="hidden" name="id">
+                <tr>
+                    <td>自动化名称<span style="color: red;">*</span></td>
+                    <td colspan="3"><input type="text" name="name" class="fm-input" maxlength="20"></td>
+                </tr>
+                <tr>
+                    <td>自动化图片</td>
+                    <td colspan="3">
+                        <img id="equipImg" src="/assets/img/add.png" alt="" class="fm-sm-img">
+                        <input type="hidden" name="path">
+                    </td>
+                </tr>
+            </table>
+            <div class="fm-btn-box flex flex-c-c flex-r-c">
+                <button class="btn-no">取消</button>
+                <button class="btn-del" style="display: none">删除</button>
+                <button class="btn-save" >保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@}

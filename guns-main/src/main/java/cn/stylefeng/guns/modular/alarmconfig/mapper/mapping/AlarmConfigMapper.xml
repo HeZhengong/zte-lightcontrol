@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.alarmconfig.mapper.AlarmConfigMapper">
+    <select id="selEquip" resultType="cn.stylefeng.guns.modular.alarmconfig.entity.EquipAlarmEntity">
+        select id,name,
+         offLine,electricityBox,
+         abnormalSwitch,loopCurrent
+        from t_equip
+    </select>
+    <update id="updStatus" parameterType="string">
+        update t_equip set
+        <if test="offLine=='1'.toString()">
+            offLine=1
+        </if>
+        <if test="offLine=='0'.toString()">
+            offLine=0
+        </if>
+
+        <if test="electricityBox=='1'.toString()">
+            electricityBox=1
+        </if>
+        <if test="electricityBox=='0'.toString()">
+            electricityBox=0
+        </if>
+
+        <if test="abnormalSwitch=='1'.toString()">
+            abnormalSwitch=1
+        </if>
+        <if test="abnormalSwitch=='0'.toString()">
+            abnormalSwitch=0
+        </if>
+
+        <if test="loopCurrent=='1'.toString()">
+            loopCurrent=1
+        </if>
+        <if test="loopCurrent=='0'.toString()">
+            loopCurrent=0
+        </if>
+        where id in (${id})
+    </update>
+    <select id="selEquipType" resultType="cn.stylefeng.guns.modular.alarmconfig.entity.EquipTypeEntity">
+        select * from a_alarm_types;
+    </select>
+
+    <select id="selById" resultType="cn.stylefeng.guns.modular.alarmconfig.entity.EquipTypeEntity">
+        select
+        t.name,t.alarmSwitch,
+        t.inform,c.offLineDays
+        from a_alarm_types t
+        join a_offline_config c
+        on t.id=c.typeId
+        where t.id=#{id}
+    </select>
+
+    <select id="selById1" resultType="cn.stylefeng.guns.modular.alarmconfig.entity.EquipTypeEntity">
+        select
+        t.name,t.alarmSwitch,
+        t.inform
+        from a_alarm_types t
+        where t.id=#{id}
+    </select>
+
+    <update id="updTypes" parameterType="cn.stylefeng.guns.modular.alarmconfig.entity.EquipTypeEntity">
+        update a_alarm_types set
+        inform=#{inform},
+        alarmSwitch=#{alarmSwitch}
+        where id=#{id}
+    </update>
+
+    <update id="updOffLine" parameterType="cn.stylefeng.guns.modular.alarmconfig.entity.EquipTypeEntity">
+        update a_offline_config set offLineDays=#{offLineDays}
+    </update>
+
+    <select id="selCurrent" resultType="cn.stylefeng.guns.modular.alarmconfig.entity.CurrentEntity">
+        select
+        c.id id,c.currentMin currentMin,c.currentMax currentMax,
+        t.name equipName,t.id equipId,
+        l.name loopName,l.id loopId
+
+        from t_equip t
+
+        left join t_equip_loop l
+        on t.id=l.equipId
+
+        left join a_current_config c
+        on t.id=c.equipId  and  c.loopId=l.id
+    </select>
+
+    <insert id="insCurrent" parameterType="cn.stylefeng.guns.modular.alarmconfig.entity.CurrentEntity">
+        insert into a_current_config values (
+        #{id},
+        #{currentMin},
+        #{currentMax},
+        #{equipId},
+        #{typeId},
+        #{loopId}
+        )
+    </insert>
+
+    <update id="updCurrent" parameterType="cn.stylefeng.guns.modular.alarmconfig.entity.CurrentEntity">
+        update  a_current_config set
+        currentMin=#{currentMin},
+        currentMax=#{currentMax}
+        where id=#{id}
+    </update>
+
+    <select id="queryBox" resultType="cn.stylefeng.guns.modular.alarmconfig.entity.ElectricityBoxEntity">
+        select
+    t.id equipId,t.name equipName,
+    ec.id,
+	ec.aVoltageMin,ec.aVoltageMax,
+	ec.bVoltageMin,ec.bVoltageMax,
+	ec.cVoltageMin,ec.cVoltageMax,
+	ec.aElectricityMin,ec.aElectricityMax,
+	ec.bElectricityMin,ec.bElectricityMax,
+	ec.cElectricityMin,ec.cElectricityMax
+ from t_equip t
+ left join a_electricitybox_config  ec
+ on t.id=ec.equipId
+    </select>
+
+    <insert id="insBox" parameterType="cn.stylefeng.guns.modular.alarmconfig.entity.ElectricityBoxEntity">
+        insert into a_electricitybox_config values (
+        #{id},
+        #{aVoltageMin},
+        #{aVoltageMax},
+        #{bVoltageMin},
+        #{bVoltageMax},
+        #{cVoltageMin},
+        #{cVoltageMax},
+        #{aElectricityMin},
+        #{aElectricityMax},
+        #{bElectricityMin},
+        #{bElectricityMax},
+        #{cElectricityMin},
+        #{cElectricityMax},
+        #{equipId},
+        #{typeId}
+        )
+    </insert>
+
+    <update id="updBox" parameterType="cn.stylefeng.guns.modular.alarmconfig.entity.ElectricityBoxEntity">
+        update a_electricitybox_config set
+        aVoltageMin=#{aVoltageMin},
+        aVoltageMax=#{aVoltageMax},
+        bVoltageMin=#{bVoltageMin},
+        bVoltageMax=#{bVoltageMax},
+        cVoltageMin=#{cVoltageMin},
+        cVoltageMax=#{cVoltageMax},
+        aElectricityMin=#{aElectricityMin},
+        aElectricityMax=#{aElectricityMax},
+        bElectricityMin=#{bElectricityMin},
+        bElectricityMax=#{bElectricityMax},
+        cElectricityMin=#{cElectricityMin},
+        cElectricityMax=#{cElectricityMax}
+        where id=#{id}
+    </update>
+</mapper>

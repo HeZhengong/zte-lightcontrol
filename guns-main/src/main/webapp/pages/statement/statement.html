@@ -1,0 +1,35 @@
+@layout("/common/_container.html",{js:["/assets/modular/statement/statement.js"]}){
+	<div class="ifr-content" id="my_div_div">
+		<div class="ifr-tit flex flex-c-c">
+			<span>统计报表</span>
+		</div>
+		<div class="ifr-main flex">
+			<div class="ifr-form" style="margin: 10% 39% 0 39%;">
+				<table class="zn-t-table1" style="margin: 2rem auto">
+					<tr>
+						<td>报表类型</td>
+						<td colspan="3">
+							<select class="req-ipt" style="height: 2.8rem; width: 194px;" id="export-type">
+								<option selected value="equip">设备报表</option>
+								<option value="trouble">故障报表</option>
+								<option value="order">工单报表</option>
+								<option value="energy">能耗报表</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>日期筛选</td>
+						<td colspan="3"><input style="height: 2.8rem;" placeholder="请选择时间" onfocus="this.blur()" name="password" id="exportTime" type="text" class="req-ipt"></td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<div class="cj-btn-box flex flex-c-c flex-r-b">
+								<button class="btn-wy" style="width: 100%;width: 40%;margin-left: 38%;height: 2.6rem;" id="btn-export">导出报表</button>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+@}

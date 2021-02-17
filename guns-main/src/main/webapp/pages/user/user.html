@@ -1,0 +1,54 @@
+@layout("/common/_container.html",{js:["/assets/modular/user/user.js"]}){
+	<div class="ifr-content" id="hzy_user">
+		<div class="ifr-tit flex flex-c-c">
+			<span>用户中心-用户列表</span>
+			<button id="user_edit" onclick="userInfoObj.openModalOfAddUser()" class="btn-g" style="    margin-left: 2.5rem;"><i class="layui-icon">&#xe654;</i>添加</button>
+			<button id="user_export" onclick="userInfoObj.exportUserInfo()" class="btn-g"><i class="layui-icon">&#xe654;</i>导出</button>
+			<input type="text" id="search_account" class="btn-g" placeholder="请输入用户名" style="width: 6.375rem;margin-left: 30.5rem;">
+			<input type="text" id="search_phone" class="btn-g" placeholder="请输入手机号" style="width: 6.375rem;">
+			<select class="btn-g" id="search_roleId" style="width: 7.735rem;"></select>
+			<button id="search_btn" onclick="userInfoObj.reloadTable()" class="btn-g"><i class="layui-icon">&#xe654;</i>搜索</button>
+			<button id="clear_btn" onclick="userInfoObj.clearSearchInput()" class="btn-g"><i class="layui-icon">&#xe654;</i>清空</button>
+		</div>
+		<div class="ifr-main flex">
+			<div class="ifr-right flex-1">
+				<table id="user-lise-table" lay-filter="user-lise-table" class="ifr-table">
+					<!--<colgroup>
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+						<col width="10%">
+						<col width="30%">
+					</colgroup>
+					<tr>
+						<th>序号</th>
+						<th>用户名</th>
+						<th>昵称</th>
+						<th>手机号</th>
+						<th>邮箱</th>
+						<th>角色</th>
+						<th>备注</th>
+						<th>操作</th>
+					</tr>-->
+				</table>
+			</div>
+		</div>
+
+		<!--模态框 开始-->
+		<div class="modal">
+
+		</div>
+		<!--模态框 结束-->
+
+
+		<script type="text/html" id="barAction">
+			<!--操作类-->
+			<button class="btn-g" lay-event="edit">编辑</button>
+			<button class="btn-g" lay-event="resetPwd">重置密码</button>
+			<button class="btn-r" lay-event="del">删除</button>
+		</script>
+	</div>
+@}

@@ -1,0 +1,36 @@
+@layout("/common/_container.html",{js:["/assets/modular/map/map.js"]}){
+    <style>
+        body, html,#map {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+    </style>
+    <script type="text/javascript" src="${ctxPath}/assets/modular/map/mapcolor.js"></script>
+    <script type="text/javascript" src="${ctxPath}/assets/js/InfoBox_min.js?v=20191025"></script>
+
+    <div class="ifr-content">
+        <div class="map-p-top flex flex-c-c">
+            <div class="sch-box flex flex-c-c">
+                <input type="text" id="map_search_input" class="flex-1" placeholder="请输入地理位置">
+                <div class="sc-btn" id="map_search">搜索</div>
+                <div id="r-result"></div>
+            </div>
+
+            <!--<div class="sch-box flex flex-c-c">
+                <input type="text" class="flex-1" placeholder="艾溪湖2号设备">
+                <div class="sc-btn">搜索</div>
+            </div>-->
+            <div class="req-group flex flex-c-c layui-form">
+                <select class="req-ipt" lay-filter="equip_filter" id="equip_select" lay-search>
+                    <option value="">请选择设备</option>
+                    @for(equip in list){
+                    <option data-lat="${equip.latitude}" data-lng="${equip.longitude}" value="${equip.id}">${equip.name}</option>
+                    @}
+                </select>
+            </div>
+            <button class="btn-g" id="map_button">平面地图</button>
+            <button class="btn-w" id="3dmap_button">3D地图</button>
+            <div class="yn-f11">
+                <img src="/assets/img/yn-f11.png" id="qpImg" alt="" class="ynf-img">
+            </div>
+        </div>
+        <div id="map"></div>
+    </div>
+@}

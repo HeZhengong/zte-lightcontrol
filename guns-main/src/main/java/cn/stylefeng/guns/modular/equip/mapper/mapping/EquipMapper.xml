@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.equip.mapper.EquipMapper">
+
+    <sql id="Column">
+       t.id,
+       t.name,
+       t.no,
+       t.type,
+       t.mac,
+       t.distributionBox,
+       t.boxStatus,
+       t.internetCard,
+       t.latitude,
+       t.longitude,
+       t.status,
+       t.path,
+       t.model,
+       t.loopCount,
+       t.createTime,
+       t.updateTime,
+       t.createUser,
+       t.updateUser
+    </sql>
+
+    <select id="selectList" resultType="cn.stylefeng.guns.modular.equip.entity.EquipEntity">
+        select <include refid="Column"/>
+        from t_equip t
+        <where>
+            <if test="equip.name != null and equip.name != ''">
+                and t.name like CONCAT('%',#{equip.name},'%')
+            </if>
+            <if test="equip.type != null and equip.type != ''">
+                and t.type = #{equip.type}
+            </if>
+            <if test="equip.model != null and equip.model != ''">
+                and t.model like CONCAT('%',#{equip.model},'%')
+            </if>
+            <if test="equip.createUser != null and equip.createUser != ''">
+                and t.createUser = #{equip.createUser}
+            </if>
+        </where>
+        order by t.createTime desc
+    </select>
+
+    <update id="updateStatus" parameterType="cn.stylefeng.guns.modular.equip.entity.EquipEntity">
+        update t_equip
+        set status=#{status}
+        where id =#{id}
+    </update>
+
+    <select id="count" resultType="int">
+        select  count(*) from t_equip
+        where status='1'
+    </select>
+    <select id="countType" resultType="java.util.Map">
+        select type,count(*) countType from t_equip
+        group by type
+    </select>
+
+    <select id="check" resultType="int">
+        select count(1)
+        from t_equip t
+        <where>
+            <if test="no != null and no != ''">
+                and t.no = #{no}
+            </if>
+            <if test="id != null and id != ''">
+                and t.id = #{id}
+            </if>
+        </where>
+    </select>
+</mapper>

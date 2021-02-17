@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.workorder.mapper.WorkOrderMapper">
+    <insert id="insWorkOrder" parameterType="cn.stylefeng.guns.modular.workorder.entity.WorkOrderEntity">
+        insert into work_order(
+            id,
+            address,
+            work_order.describe,
+            completionTime,
+            manner,
+            handingId,
+            faultPath,
+            creatId,
+            del,
+            disposeStatus,
+            createDate
+        )values (
+            #{id},
+            #{address},
+            #{describe},
+            #{completionTime},
+            #{manner},
+            #{handingId},
+            #{faultPath},
+            #{creatId},
+            0,
+            0,
+            NOW()
+        )
+    </insert>
+
+    <select id="findList" resultType="cn.stylefeng.guns.modular.workorder.entity.WorkOrderEntity">
+        select * from work_order
+        where
+        del=0 and disposeStatus=0
+        <if test="map.workOrderEntity.createDate!=null">
+            and cast(createDate as date)=#{map.workOrderEntity.createDate}
+        </if>
+        and
+        (
+        creatId=#{map.userId}
+        or handingId=#{map.userId}
+        )
+    </select>
+
+    <select id="findDispose" resultType="cn.stylefeng.guns.modular.workorder.entity.WorkOrderEntity">
+        select * from work_order
+        where
+        del=0 and disposeStatus=1
+        <if test="map.createDate!=null and map.createDate!=''">
+            and cast(createDate as date)=#{map.createDate}
+        </if>
+        and
+        (
+        creatId=#{map.userId}
+        or handingId=#{map.userId}
+        )
+    </select>
+
+    <select id="findDeleted" resultType="cn.stylefeng.guns.modular.workorder.entity.WorkOrderEntity">
+        select * from work_order
+        where
+        del=1
+        <if test="map.createDate!=null and map.createDate!=''">
+            and cast(createDate as date)=#{map.createDate}
+        </if>
+        and
+        (
+        creatId=#{map.userId}
+        or handingId=#{map.userId}
+        )
+    </select>
+
+    <update id="delWorkOrder" parameterType="string">
+        update work_order set del=1 where id=#{id}
+    </update>
+
+    <update id="restoreWorkOrder" parameterType="string">
+        update work_order set del=0 where id=#{id}
+    </update>
+
+    <select id="selById" resultType="cn.stylefeng.guns.modular.workorder.entity.WorkOrderEntity" parameterType="string">
+        select * from work_order where id=#{id}
+    </select>
+
+    <update id="editWorkOrder" parameterType="cn.stylefeng.guns.modular.workorder.entity.WorkOrderEntity">
+        update work_order set
+         address=#{address},
+         work_order.describe=#{describe},
+         completionTime=#{completionTime},
+         handingId=#{handingId},
+         manner=#{manner},
+         faultPath=#{faultPath}
+         where id=#{id}
+    </update>
+
+    <update id="clWorkOder" parameterType="cn.stylefeng.guns.modular.workorder.entity.WorkOrderEntity">
+        update work_order set
+        faultCause=#{faultCause},
+        solution=#{solution},
+        disposeResult=#{disposeResult},
+        disposePath=#{disposePath},
+        disposeStatus=1
+        where id=#{id}
+    </update>
+</mapper>

@@ -1,0 +1,109 @@
+@layout("/common/_container.html",{js:["/assets/modular/equip/list.js"],css:["/assets/common/module/formSelects/formSelects-v4.css"]}){
+<script type="text/javascript" src="${ctxPath}/assets/js/jquery-1.11.0.min.js?v=${constants.getReleaseVersion()}"></script>
+<div class="ifr-content" id="myContiner">
+    <div class="ifr-tit flex flex-c-c">
+        <div class="ifr-tit flex flex-c-c">
+            <span>智能控制-设备管理</span>
+            <div class="sch-box flex flex-c-c">
+                <input type="text" id="search_model" class="flex-1" placeholder="请输入设备型号">
+                <input type="text" id="search_name" class="flex-1" placeholder="请输入设备名称">
+                <div id="btnSearch" class="sc-btn">搜索</div>
+            </div>
+            <button id="btnAdd" class="btn-g"><i class="layui-icon"></i>添加</button>
+            <div class="flex-1">
+                <button id="btnList" class="btn-g btn-y"><i class="layui-icon"></i>列表</button>
+                <button id="btnPic" class="btn-g"><i class="layui-icon"></i>图文</button>
+            </div>
+            <button id="btnExp" class="btn-g"><i class="layui-icon"></i>导出</button>
+        </div>
+    </div>
+    <div class="ifr-main flex" id="tablePage">
+        <table id="listTable" class="ifr-table" lay-filter="listTable"></table>
+    </div>
+    <div class="ifr-main flex flex-wrap" id="picPage" style="display: none"></div>
+</div>
+
+<div class="modal" id="editModal" style="display: none">
+    <div class="modal-cnt modal-form2">
+        <div class="modal-tit">编辑设备</div>
+        <div class="modal-main" style="overflow: auto;height: 350px">
+            <input type="hidden" value="${id}" name="equipId">
+            <table class="zn-t-table1" style="margin: 2rem auto">
+                <input type="hidden" name="id">
+                <tr>
+                    <td>设备名称<span style="color: red;">*</span></td>
+                    <td colspan="3"><input type="text" name="name" class="fm-input" maxlength="20"></td>
+                </tr>
+                <tr class="addColumn">
+                    <td>设备类型</td>
+                    <td colspan="3">
+                        <select name="type" id="type" class="fm-input">
+                            <option value="1">配电</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class="addColumn">
+                    <td>设备型号</td>
+                    <td colspan="3"><input type="text" name="model" class="fm-input" maxlength="20"></td>
+                </tr>
+                <tr class="addColumn">
+                    <td>设备编号<span style="color: red;">*</span></td>
+                    <td colspan="3"><input type="text" name="no" class="fm-input" maxlength="10"></td>
+                </tr>
+                <tr class="addColumn">
+                    <td>物联网卡号</td>
+                    <td colspan="3"><input type="text" name="internetCard" class="fm-input" maxlength="10"></td>
+                </tr>
+                <tr class="addColumn">
+                    <td>回路数<span style="color: red;">*</span></td>
+                    <td colspan="3"><input type="text" name="loopCount" class="fm-input" maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" onchange="this.value=this.value.replace(/\D/g,'')"></td>
+                </tr>
+                <tr class="addColumn">
+                    <td>Mac地址</td>
+                    <td colspan="3"><input type="text" name="mac" class="fm-input" maxlength="10"></td>
+                </tr>
+                <tr>
+                    <td>配电箱名称</td>
+                    <td colspan="3"><input type="text" name="distributionBox" class="fm-input" maxlength="10"></td>
+                </tr>
+                <tr>
+                    <td>经度</td>
+                    <td><input type="text" name="latitude" class="fm-input f-sm" maxlength="10"></td>
+                    <td>纬度</td>
+                    <td><input type="text" name="longitude" class="fm-input f-sm" maxlength="10"></td>
+                </tr>
+                <tr>
+                    <td>设备图片</td>
+                    <td colspan="3">
+                        <img id="equipImg" src="/assets/img/add.png" alt="" class="fm-sm-img">
+                        <input type="hidden" name="path">
+                    </td>
+                </tr>
+                <tr class="editColumn">
+                    <td>禁用回路</td>
+                    <td colspan="3">
+                        <select name="loop" id="loop" xm-select="selLoop" xm-select-direction="down">
+                            <option value="">请选择回路</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="fm-btn-box flex flex-c-c flex-r-c">
+            <button class="btn-no">取消</button>
+            <button class="btn-save" >保存</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="tableBar">
+    <button class="btn-wy" lay-event="edit">编辑</button>
+    @if(shiro.hasPermission("/mgr/reset")){
+    <button class="btn-wy" lay-event="delete">删除</button>
+    @}
+    <button class="btn-wy" lay-event="reset">重启</button>
+    <button class="btn-wy" lay-event="allOpen">全开</button>
+    <button class="btn-wy" lay-event="allClose">全关</button>
+</script>
+
+@}

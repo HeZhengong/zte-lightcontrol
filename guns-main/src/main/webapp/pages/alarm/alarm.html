@@ -1,0 +1,163 @@
+@layout("/common/_container.html",{js:["/assets/modular/alarm/alarm.js"]}){
+	<div class="ifr-content">
+		<div class="ifr-tit flex flex-c-c">
+			<span>智能控制-设备管理</span>
+		</div>
+		<div class="ifr-main">
+				<div class="zn-tn-box flex" >
+					<div class="zn-top flex-1 flex flex-c-c">
+						<!--用于判断查询的是 未处理、已处理、回收站-->
+						<input type="hidden" value="" id="selectStatus">
+						<!--用于跳转处理界面-->
+						<input type="hidden" value="${id}" id="showDispose">
+						<button class="btn-w btn-g" id="wcl">未处理</button>
+						<button class="btn-w" id="ycl">已处理</button>
+						<button class="btn-w " id="hsz">回收站</button>
+						<div class="zn-group">
+							<span>日期筛选</span>
+							<input type="text" id="alarmDate" onfocus="this.blur()" name="alarmDate" class="req-ipt" placeholder="请选择时间">
+							<select class="req-ipt" name="alarmCategory">
+								<option value="">--请选择告警类型--</option>
+								<option value="设备离线">设备离线</option>
+								<option value="三相电告警">三相电告警</option>
+								<option value="异常开关告警">异常开关告警</option>
+								<option value="箱门状态告警">箱门状态告警</option>
+								<option value="线缆防盗告警">线缆防盗告警</option>
+								<option value="回路电流告警">回路电流告警</option>
+							</select>
+
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button class="btn-g search" onclick=" alarmInfoObj.search()" >查询</button>
+							<button class="btn-g clear search">清除</button>
+							<button class="btn-g" id="btnExp">导出</button>
+						</div>
+					</div>
+				</div>
+				<div class="ifr-right flex-1">
+					
+					<table class="ifr-table" id="alarm-lise-table" lay-filter="alarm-lise-table">
+						<!--<colgroup>
+							<col width="5%">
+							<col width="5%">
+							&lt;!&ndash;<col width="10%">
+							<col width="10%">
+							<col width="10%">
+							<col width="10%">
+							<col width="10%">
+							<col width="30%">&ndash;&gt;
+						</colgroup>
+						<tr>
+							<th><input type="checkbox" class="" id="inverse" value=""></th>
+							<th>序号</th>
+							<th>告警时间</th>
+							<th>告警类型</th>
+							<th>告警设备名称</th>
+							<th>告警描述</th>
+							<th id="tzfs">通知方式</th>
+							<th id="gjyy" style="display: none">告警原因</th>
+							<th id="clsj" style="display: none">处理时间</th>
+							<th>操作</th>
+						</tr>-->
+					</table>
+				</div>
+		</div>
+
+		<!--转工单的模态框  开始-->
+		<div class="modal" style="display: none" id="swoModal">
+			<div class="modal-cnt modal-form">
+				<div class="modal-tit">转工单</div>
+				<div class="layui-form modal-main" lay-filter="workOrder">
+					<input type="hidden" name="switchId" value="">
+					<table class="zn-t-table1" style="margin: 2rem auto">
+						<tr>
+							<td>故障地址</td>
+							<td colspan="3"><input type="text" class="fm-input" name="address"></td>
+						</tr>
+						<tr>
+							<td>需要完成时间</td>
+							<td colspan="3"><input type="text" class="fm-input" id="completionTime" onfocus="this.blur()" name="completionTime"></td>
+						</tr>
+						<tr>
+							<td>派发人</td>
+							<td colspan="3">
+								<select type="text" class="fm-input" name="handingId" id="handingId">
+									<option value="">--请选择派发人--</option>
+									@for(list in users){
+									<option value="${list.userId}">${list.account}</option>
+									@}
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>派发方式</td>
+							<td colspan="3">
+								<select type="text" class="fm-input" name="manner">
+									<option value="">--请选择派发方式--</option>
+									<option value="钉钉">钉钉</option>
+									<option value="邮箱">邮箱</option>
+									<option value="短信">短信</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>故障图片</td>
+							<td colspan="3">
+								<img src="img/login-logo.png" alt="" class="fm-sm-img"  id="faultPath">
+								<input type="hidden" name="faultPath">
+							</td>
+						</tr>
+					</table>
+					<div class="fm-btn-box flex flex-c-c flex-r-c">
+						<button class="btn-no">取消</button>
+						<button class="btn-save">保存</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--转工单的模态框  结束-->
+
+		<!--立即处理的模态框  开始-->
+		<div class="modal" style="display: none" id="ljclModal" >
+			<div class="modal-cnt modal-form" >
+				<div class="modal-tit">立即处理</div>
+				<div class="modal-main">
+					<input type="hidden" name="disposeId" value="">
+					<br><br>
+					<table class="zn-t-table1" style="margin: 2rem auto">
+						<tr>
+							<td>故障原因及解决办法：</td>
+						</tr>
+						<tr>
+							<td colspan="3"><input type="text" class="fm-input" name="alarmCause"></td>
+						</tr>
+					</table>
+					<br><br><br>
+					<div class="fm-btn-box flex flex-c-c flex-r-c">
+						<button class="btn-no">取消</button>
+						<button class="btn-save">保存</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--立即处理的模态框  结束-->
+
+		<!--未处理操作按钮-->
+		<script type="text/html" id="tableBarWCL">
+			<button class="btn-g" lay-event="ljcl">立即处理</button>
+			<button class="btn-g" lay-event="zgd">转工单</button>
+			<button class="btn-g" lay-event="sc">删除</button>
+		</script>
+		<!--已处理操作按钮-->
+		<script type="text/html" id="tableBarYCL">
+			<button class="btn-g" lay-event="sc">删除</button>
+		</script>
+		<!--回收站操作按钮-->
+		<script type="text/html" id="tableBarHSZ">
+			<button class="btn-g" lay-event="hy">还原</button>
+		</script>
+		<!--序号-->
+		<script type="text/html" id="rank">
+			{{d.LAY_TABLE_INDEX+1}}
+		</script>
+	</div>
+@}

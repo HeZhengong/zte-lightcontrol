@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.sys.modular.system.mapper.LogoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="fileMap" type="cn.stylefeng.guns.sys.modular.system.entity.FileInfo">
+        <id column="file_id" property="fileId" />
+        <result column="file_bucket" property="fileBucket" />
+        <result column="file_name" property="fileName" />
+        <result column="file_suffix" property="fileSuffix" />
+        <result column="file_size_kb" property="fileSizeKb" />
+        <result column="final_name" property="finalName" />
+        <result column="file_path" property="filePath" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_user" property="createUser" />
+        <result column="update_user" property="updateUser" />
+    </resultMap>
+
+    <!--根据id查看当前用户是否在表中存在记录-->
+    <select id="queryOneById" parameterType="java.lang.String" resultType="java.util.Map">
+        select
+            *
+        from
+            logo_config
+        where
+            del != 1
+        and
+            target_id = #{targetId}
+    </select>
+
+    <!--保存一条信息-->
+    <insert id="saveOne" parameterType="java.util.Map">
+        insert into logo_config
+        (
+            id,
+            target_id,
+            project_name,
+            logo_path,
+            background_path,
+            copyright,
+            create_time,
+            create_user,
+            update_time,
+            update_user,
+            del
+        )
+        value (
+            #{id},
+            #{targetId},
+            #{projectName},
+            #{logoPath},
+            #{backgroundPath},
+            #{copyright},
+            NOW(),
+            null,
+            null,
+            null,
+            0
+        )
+    </insert>
+
+    <update id="updateOne" parameterType="java.util.Map">
+        update logo_config
+        set
+            project_name = #{projectName},
+            logo_path = #{logoPath},
+            background_path = #{backgroundPath},
+            copyright = #{copyright}
+        where
+            del != 1
+        and
+            target_id = #{targetId}
+    </update>
+
+    <select id="findFileInfo" parameterType="java.lang.String" resultMap="fileMap">
+        select * from sys_file_info
+        where file_id = #{fileId}
+    </select>
+</mapper>

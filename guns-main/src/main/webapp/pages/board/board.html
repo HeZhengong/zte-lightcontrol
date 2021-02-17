@@ -1,0 +1,92 @@
+@layout("/common/_container.html",{js:["/assets/modular/board/board.js"]}){
+<script src="${ctxPath}/assets/common/libs/echarts/echarts.min.js?v=${constants.getReleaseVersion()}"></script>
+<script type="text/javascript" src="${ctxPath}/assets/modular/map/mapcolor.js"></script>
+<script type="text/javascript" src="${ctxPath}/assets/js/InfoBox_min.js?v=20191025"></script>
+<div class="ifr-content map-layout2">
+		<div class="map-p-left">
+			<div class="map-p-lf1">
+				<div class="echart-box">
+					<img src="" alt="" style="width: 100%;height: 100%" id="scene">
+				</div>
+				<p class="map-f" id="sceneText">当前场景：平日模式</p>
+			</div>
+			<div class="map-p-lf1">
+				<div class="echart-box" id="countType"></div>
+				<p class="map-f">设备类型统计</p>
+			</div>
+			<div class="map-p-lf1">
+				<div class="echart-box flex flex-c-c flex-r-c">
+					<div class="svg-circle">
+						<svg width="110" height="110" viewbox="0 0 110 110">
+						    <circle cx="55" cy="55" r="45" stroke-width="10" stroke="#ffffff" fill="none"></circle>
+						    <circle cx="55" cy="55" r="45" stroke-width="10" stroke="#3868F5" fill="none" transform="matrix(0,-1,1,0,0,110)" stroke-dasharray="0 284"></circle>
+						</svg>
+						<p class="" id="onlineRate">75%</p>
+					</div>
+				</div>
+				<p class="map-f">设备在线率统计</p>
+			</div>
+			<div class="map-p-lf1">
+				<div class="map-p-tit">传感器信息</div>
+				<div class="map-p-info1">
+					<p>温度：29.5度</p>
+					<p>照度：3000流明</p>
+				</div>
+				<div class="map-p-time">2019年9月24日 11:23:29</div>
+			</div>
+		</div>
+		<div class="map-p-top flex flex-c-c">
+			<button class="btn-g btn-w" id="map_button">平面地图</button>
+			<button class="btn-w" id="3dmap_button">3D地图</button>
+
+
+			<!--<div class="sch-box flex flex-c-c">
+				<input type="text" class="flex-1" placeholder="艾溪湖2号设备">
+				<div class="sc-btn">搜索</div>
+			</div>-->
+			<div class="layui-form req-group flex flex-c-c" lay-filter="equip_select">
+				<select class="req-ipt" lay-filter="equip_filter" id="equip_select" lay-search>
+					<option value="">请选择设备</option>
+					@for(equip in list){
+					<option data-lat="${equip.latitude}" data-lng="${equip.longitude}" value="${equip.id}">${equip.name}</option>
+					@}
+				</select>
+			</div>
+			<div class="yn-f11">
+				<img src="assets/img/yn-f11.png" id="qpImg" alt="" class="ynf-img">
+			</div>
+		</div>
+		<div class="map-p-right">
+			<div class="map-p-rt1">
+				<p>安装日期：2018.3.12</p>
+				<p>安装日期：2018.3.12</p>
+			</div>
+			<div class="map-p-rt2">
+				<div class="map-p-tit">项目耗能</div>
+				<div class="map-p-info1">
+					<p>当天能耗：29.5流明</p>
+					<p>本月能耗：3000流明</p>
+					<p>本年度能耗：3000流明</p>
+				</div>
+				<div class="echart-box1" id="energy">
+					
+				</div>
+			</div>
+			<div class="map-p-rt3">
+				<div class="map-p-tit">告警信息</div>
+				<div id="queryAlarmList">
+					<div class="map-p-info1" style="height: 2rem">
+						<span>温度</span>
+						<span>温度</span>
+					</div>
+					<div class="map-p-info1" style="height: 2rem">
+						<span>温度</span>
+						<span>温度</span>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div id="map" style="width: 100%;height: 100%;"></div>
+</div>
+@}

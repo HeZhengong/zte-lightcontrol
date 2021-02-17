@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.analysis.mapper.AnalysisMapper">
+
+
+    <select id="selectList" parameterType="java.lang.String"
+            resultType="cn.stylefeng.guns.modular.analysis.entity.AnalysisEntity">
+        SELECT
+            z_energy.id,
+            sum(z_energy.theory_electricity) theory_electricity,
+            sum(z_energy.actual_electricity) actual_electricity,
+            sum(z_energy.save_electricity) save_electricity,
+            sum(z_energy.save_water) save_water,
+            sum(z_energy.CO2) CO2,
+            sum(z_energy.SO2) SO2,
+            sum(z_energy.save_derv) save_derv,
+            sum(z_energy.save_coal) save_coal,
+            z_energy.create_time,
+            z_energy.update_time,
+            z_energy.del
+        FROM
+            z_energy
+        WHERE
+            z_energy.del != 1
+        AND
+            (z_energy.create_time between CONCAT(#{startTime},' 00:00:00') and CONCAT(#{endTime},' 23:59:59'))
+        ORDER BY
+            z_energy.create_time ASC
+    </select>
+
+    <!--parameterType="cn.stylefeng.guns.modular.analysis.entity.AnalysisEntity"-->
+    <insert id="insertList" >
+        INSERT INTO z_energy (
+            id,
+            theory_electricity,
+            actual_electricity,
+            save_electricity,
+            save_water,
+            CO2,
+            SO2,
+            save_derv,
+            save_coal,
+            create_time,
+            update_time,
+            del
+        )
+        VALUES
+        <foreach collection="list" item="analysisEntity" separator=",">
+            (
+                #{analysisEntity.id},
+                #{analysisEntity.theoryElectricity},
+                #{analysisEntity.actualElectricity},
+                #{analysisEntity.saveElectricity},
+                #{analysisEntity.saveWater},
+                #{analysisEntity.CO2},
+                #{analysisEntity.SO2},
+                #{analysisEntity.saveDerv},
+                #{analysisEntity.saveCoal},
+                #{analysisEntity.createTime},
+                #{analysisEntity.updateTime},
+                #{analysisEntity.del}
+            )
+        </foreach>
+    </insert>
+
+    <select id="getMaxAndMinDate" resultType="java.util.Map">
+        select max(create_time) maxTime, MIN(create_time) minTime  from z_energy
+    </select>
+</mapper>

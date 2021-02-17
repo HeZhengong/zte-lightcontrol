@@ -1,0 +1,229 @@
+@layout("/common/_container.html",{js:["/assets/modular/workorder/workorder.js"]}){
+<div class="ifr-content">
+    <div class="ifr-tit flex flex-c-c">
+        <span>智能控制-设备管理</span>
+    </div>
+    <div class="ifr-main">
+        <div class="zn-tn-box flex" >
+            <div class="zn-top flex-1  flex flex-c-c">
+                <!--用于判断查询的是 未处理、已处理、回收站-->
+                <input type="hidden" value="" id="selectStatus">
+
+                <input type="hidden" id="userId" value="${userId}">
+                <button class="btn-w btn-g" id="wcl">未处理</button>
+                <button class="btn-w" id="ycl">已处理</button>
+                <button class="btn-w " id="hsz">回收站</button>
+                <div class="zn-group">
+                    <span>日期筛选</span>
+                    <input type="text" id="createDate" onfocus="this.blur()" name="createDate" class="req-ipt" placeholder="请选择时间">
+                    <button class="btn-g" id="cjgd">创建工单</button>
+                    <button class="btn-g" id="btnExp">一键导出</button>
+                </div>
+            </div>
+        </div>
+        <div class="ifr-right flex-1">
+
+            <table class="ifr-table" id="workOrder-lise-table" lay-filter="workOrder-lise-table">
+
+            </table>
+        </div>
+    </div>
+
+    <!--新增、编辑工单的模态框  开始-->
+    <div class="modal" style="display: none" id="xzgdModal">
+        <div class="modal-cnt modal-form" style="height: 39.625rem">
+            <div class="modal-tit">转工单</div>
+            <div class="layui-form modal-main" lay-filter="workOrder">
+                <input type="hidden" name="switchId" value="">
+                <table class="zn-t-table1" style="margin: 2rem auto">
+                    <tr>
+                        <td>详细地址<input type="hidden" name="id" id="xeId"></td>
+                        <td colspan="3"><input type="text" class="fm-input" name="address"></td>
+                    </tr>
+                    <tr>
+                        <td>故障描述</td>
+                        <td colspan="3"><input type="text" class="fm-input" name="describe"></td>
+                    </tr>
+                    <tr>
+                        <td>需要完成时间</td>
+                        <td colspan="3"><input type="text" class="fm-input" id="completionTime" onfocus="this.blur()" name="completionTime"></td>
+                    </tr>
+                    <tr>
+                        <td>派发人</td>
+                        <td colspan="3">
+                            <select type="text" class="fm-input" name="handingId" id="handingId">
+                                <option value="">--请选择派发人--</option>
+                                @for(list in users){
+                                <option value="${list.userId}">${list.account}</option>
+                                @}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>派发方式</td>
+                        <td colspan="3">
+                            <select type="text" class="fm-input" name="manner">
+                                <option value="">--请选择派发方式--</option>
+                                <option value="钉钉">钉钉</option>
+                                <option value="邮箱">邮箱</option>
+                                <option value="短信">短信</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>故障图片</td>
+                        <td colspan="3">
+                            <img src="img/login-logo.png" alt="" class="fm-sm-img"  id="faultPath">
+                            <input type="hidden" name="faultPath">
+                        </td>
+                    </tr>
+                </table>
+                <div class="fm-btn-box flex flex-c-c flex-r-c">
+                    <button class="btn-no">取消</button>
+                    <button class="btn-save">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--新增工单的模态框  结束-->
+
+    <!--立即处理工单的模态框  开始-->
+    <div class="modal" style="display: none" id="ljclModal">
+        <div class="modal-cnt modal-form" style="height: 39.625rem">
+            <div class="modal-tit">立即处理</div>
+            <div class="layui-form modal-main" lay-filter="clWorkOrder">
+                <input type="hidden" name="switchId" value="">
+                <table class="zn-t-table1" style="margin: 2rem auto">
+                    <tr>
+                        <td>故障原因<input type="hidden" name="id" id="ljclId"></td>
+                        <td colspan="3"><input type="text" class="fm-input" name="faultCause"></td>
+                    </tr>
+                    <tr>
+                        <td>解决方法</td>
+                        <td colspan="3"><input type="text" class="fm-input" name="solution"></td>
+                    </tr>
+                    <tr>
+                        <td>处理结果</td>
+                        <td colspan="3"><input type="text" class="fm-input" id="disposeResult"  name="disposeResult"></td>
+                    </tr>
+                    <tr>
+                        <td>处理图片</td>
+                        <td colspan="3">
+                            <img src="img/login-logo.png" alt="" class="fm-sm-img"  id="disposePath">
+                            <input type="hidden" name="disposePath">
+                        </td>
+                    </tr>
+                </table>
+                <div class="fm-btn-box flex flex-c-c flex-r-c">
+                    <button class="btn-no">取消</button>
+                    <button class="btn-save">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--立即处理工单的模态框  结束-->
+
+    <!--详细工单的模态框  开始-->
+    <div class="modal" style="display: none" id="xxModal">
+        <div class="modal-cnt modal-form" style="height: 39.625rem">
+            <div class="modal-tit">详细</div>
+            <div class="layui-form modal-main" lay-filter="xxWorkOrder">
+                <input type="hidden" name="switchId" value="">
+                <table class="zn-t-table1" style="margin: 2rem auto">
+                    <tr>
+                        <td>详细地址</td>
+                        <td colspan="3"><input type="text" class="fm-input" name="address"></td>
+                    </tr>
+                    <tr>
+                        <td>故障描述</td>
+                        <td colspan="3"><input type="text" class="fm-input" name="describe"></td>
+                    </tr>
+                    <tr>
+                        <td>需要完成时间</td>
+                        <td colspan="3"><input type="text" class="fm-input"  onfocus="this.blur()" name="completionTime"></td>
+                    </tr>
+                    <tr>
+                        <td>派发人</td>
+                        <td colspan="3">
+                            <select type="text" class="fm-input" name="handingId" >
+                                <option value="">--请选择派发人--</option>
+                                @for(list in users){
+                                <option value="${list.userId}">${list.account}</option>
+                                @}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>派发方式</td>
+                        <td colspan="3">
+                            <select type="text" class="fm-input" name="manner">
+                                <option value="">--请选择派发方式--</option>
+                                <option value="钉钉">钉钉</option>
+                                <option value="邮箱">邮箱</option>
+                                <option value="短信">短信</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>故障图片</td>
+                        <td colspan="3">
+                            <img src="img/login-logo.png" alt="" class="fm-sm-img"  id="xxFaultPath">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>故障原因</td>
+                        <td colspan="3"><input type="text" class="fm-input" name="faultCause"></td>
+                    </tr>
+                    <tr>
+                        <td>解决方法</td>
+                        <td colspan="3"><input type="text" class="fm-input" name="solution"></td>
+                    </tr>
+                    <tr>
+                        <td>处理结果</td>
+                        <td colspan="3"><input type="text" class="fm-input"  name="disposeResult"></td>
+                    </tr>
+                    <tr>
+                        <td>处理图片</td>
+                        <td colspan="3">
+                            <img src="img/login-logo.png" alt="" class="fm-sm-img"  id="xxDisposePath">
+                        </td>
+                    </tr>
+                </table>
+                <div class="fm-btn-box flex flex-c-c flex-r-c">
+                    <button class="btn-no">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--详细工单的模态框  结束-->
+
+
+    <!--未处理操作按钮-->
+    <script type="text/html" id="tableBarWCL">
+        <button class="btn-g" lay-event="ljcl">立即处理</button>
+        {{#  if(d.creatId ==${userId}  ){ }}
+        <button class="btn-g" lay-event="bj">编辑</button>
+        {{#  } }}
+
+        {{#  if(d.creatId ==${userId}  ){ }}
+        <button class="btn-g" lay-event="sc">删除</button>
+        {{#  } }}
+    </script>
+    <!--已处理操作按钮-->
+    <script type="text/html" id="tableBarYCL">
+        <button class="btn-g" lay-event="xx">详细</button>
+        {{#  if(d.creatId ==${userId}  ){ }}
+        <button class="btn-g" lay-event="bj">编辑</button>
+        {{#  } }}
+    </script>
+    <!--回收站操作按钮-->
+    <script type="text/html" id="tableBarHSZ">
+        <button class="btn-g" lay-event="xx">详细</button>
+        <button class="btn-g" lay-event="hy">还原</button>
+    </script>
+    <!--序号-->
+    <script type="text/html" id="rank">
+        {{d.LAY_TABLE_INDEX+1}}
+    </script>
+</div>
+@}

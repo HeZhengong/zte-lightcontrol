@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.scene.mapper.SceneMapper">
+
+    <sql id="Column">
+       t.id,
+       t.name,
+       t.path,
+       t.createTime,
+       t.updateTime,
+       t.createUser,
+       t.updateUser
+    </sql>
+
+    <select id="selectList" resultType="cn.stylefeng.guns.modular.scene.entity.SceneEntity">
+        select <include refid="Column"/>
+        from t_scene t
+        <where>
+            <if test="scene.name != null and scene.name != ''">
+                and t.name like CONCAT('%',#{scene.name},'%')
+            </if>
+            <if test="scene.createUser != null and scene.createUser != ''">
+                and t.createUser = #{scene.createUser}
+            </if>
+        </where>
+        order by t.createTime asc
+    </select>
+
+</mapper>

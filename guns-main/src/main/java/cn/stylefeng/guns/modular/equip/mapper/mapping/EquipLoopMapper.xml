@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.stylefeng.guns.modular.equip.mapper.EquipLoopMapper">
+
+    <sql id="Column">
+       t.id,
+       t.equipId,
+       t.name,
+       t.no,
+       t.status,
+       t.groupId,
+       t.createTime,
+       t.updateTime,
+       t.createUser,
+       t.updateUser
+    </sql>
+
+    <select id="selectList" resultType="cn.stylefeng.guns.modular.equip.entity.EquipLoopEntity">
+        select <include refid="Column"/>
+        from t_equip_loop t
+        where t.equipId=#{equipId}
+        order by t.no asc
+    </select>
+
+    <select id="queryList" resultType="cn.stylefeng.guns.modular.equip.entity.EquipLoopEntity">
+        select <include refid="Column"/>,e.name as "equip.name",e.no as "equip.no"
+        from t_equip_loop t
+        LEFT join t_equip e on e.id=t.equipId
+        <where>
+            <if test="equipLoop.groupId!='' and equipLoop.groupId!=null">
+                and t.groupId=#{equipLoop.groupId}
+            </if>
+            <if test="equipLoop.name!='' and equipLoop.name!=null">
+                and t.name like CONCAT('%',#{equipLoop.name},'%')
+            </if>
+        </where>
+        order by t.id asc
+    </select>
+
+    <update id="updateStatus" parameterType="cn.stylefeng.guns.modular.equip.entity.EquipLoopEntity">
+        update t_equip_loop
+        set status=#{status}
+        where status not in (2,3)
+        <if test="equipId!='' and equipId!=null">
+            and equipId=#{equipId}
+        </if>
+        <if test="id!='' and id!=null">
+            and id IN
+            <foreach collection="id" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+    </update>
+
+    <update id="setClose" parameterType="cn.stylefeng.guns.modular.equip.entity.EquipLoopEntity">
+        update t_equip_loop
+        set status=0
+        where status = 3
+        <if test="equipId!='' and equipId!=null">
+            and equipId=#{equipId}
+        </if>
+    </update>
+
+    <update id="setDisabled">
+        update t_equip_loop
+        set status=3
+        WHERE id IN
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>

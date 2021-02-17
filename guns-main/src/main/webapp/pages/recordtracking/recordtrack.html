@@ -1,0 +1,38 @@
+@layout("/common/_container.html",{js:["/assets/modular/recordtracking/recordtrack.js"]}){
+
+	<div class="ifr-content">
+		<div class="ifr-tit flex flex-c-c">
+			<span>监控管理——记录跟踪</span>
+		</div>
+		<div class="ifr-main flex">
+			<div class="ifr-right flex-1">
+				<div class="opbox">
+					<button class="btn-g" id="loginFun_id">登入记录</button>
+					<button class="btn-w" id="operation_id">操作记录</button>
+				</div>
+				<table class="ifr-table">
+					<colgroup>
+						<col width="15%">
+						<col width="15%">
+						<col width="15%">
+						<col width="15%">
+						<col width="15%">
+						<col width="15%">
+						<col width="10%">
+					</colgroup>
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>用户名</th>
+							<th>访问IP</th>
+							<th>操作描述</th>
+							<th>日期时间</th>
+							<th>状态</th>
+						</tr>
+					</thead>
+					<tbody id="recordtrack_list_table"></tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+@}

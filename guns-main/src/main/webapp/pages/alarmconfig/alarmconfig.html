@@ -1,0 +1,295 @@
+@layout("/common/_container.html",{js:["/assets/modular/alarmconfig/alarmconfig.js"]}){
+	<style type="text/css">
+		.ifr-pz{
+			font-size: 1rem;
+			color: #ebefee;
+		}
+		.ifr-pz1{
+			font-size: 1.5rem;
+			color: #52FCBE;
+		}
+		.boxModal .fm-scx{margin-right: 2rem}
+		.boxModal .fm-scx .fm-input{width:8rem;text-align: center; }
+		.boxModal .fm-scx span{color: #085FC5;margin:0 0.5rem;line-height: 3rem}
+		.boxModal .modal-form{
+			width: 88.625rem;
+			height: 45.625rem;
+		}
+		#currentModal .fm-scx{margin-right: 2rem}
+		#currentModal .fm-scx .fm-input{width:8rem;text-align: center; }
+	</style>
+	<div class="ifr-content">
+		<div class="ifr-tit flex flex-c-c">
+			<span>维保管理-告警管理-告警配置</span>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span class="ifr-pz ifr-pz1" id="cspz">参数配置</span>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<span class="ifr-pz" id="sbxz">设备选择</span>
+		</div>
+		<div class="ifr-main flex">
+			<div class="ifr-left">
+					<input type="hidden" id="gjlx">
+					<div class="fz-ob flex flex-c-c">
+						<span class="fz-name flex-1">告警类型</span>
+					</div>
+					<div class="fz-li-box">
+						<div class="fz-li on flex flex-c-c flex-r-c" id="sblx" onclick="alarmConfigInfo.onClickGroup(this)">
+							<input type="hidden" name="sblxId" value="${sblxId}">
+							<span>设备离线</span>
+						</div>
+						<div class="fz-li  flex flex-c-c flex-r-c" id="sxd"  onclick="alarmConfigInfo.onClickGroup(this)">
+							<input type="hidden" name="sxdId" value="${sxdId}">
+							<span>三相电告警</span>
+						</div>
+						<div class="fz-li flex flex-c-c flex-r-c" id="yckg" onclick="alarmConfigInfo.onClickGroup(this)">
+							<input type="hidden" name="yckgId" value="${yckgId}">
+							<span>异常开关告警</span>
+						</div>
+						<div class="fz-li flex flex-c-c flex-r-c" id="hldl" onclick="alarmConfigInfo.onClickGroup(this)">
+							<input type="hidden" name="hldlId" value="${hldlId}">
+							<span>回路电流告警</span>
+						</div>
+					</div>
+				</div>
+				<div class="ifr-right flex-1">
+					<!--设备离线模块  开始-->
+					<div class="wb-box" style="margin-top: 4rem;height: 40.5625rem;" id="sblxModel">
+						<div class="wb-box-tit">
+							<span>告警配置</span>
+							<div class="chk-right flex flex-c-c">
+								<span>告警开关</span>
+								<label class="ui-switch">
+		                            <input type="checkbox" name="alarmSwitch" checked>
+		                        </label>
+							</div>
+						</div>
+						<div class="wb-box-main">
+							<table class="ifr-g-box" style="width: auto;margin-top:30px;">
+								<tr>
+									<td>通知方式</td>
+									<td><select class="fm-input" name="inform" id="inform">
+										<option value="短信">短信</option>
+										<option value="钉钉">钉钉</option>
+										<option value="邮件">邮件</option>
+									</select></td>
+
+								</tr>
+								<tr>
+									<td>离线时长</td>
+									<td>
+										<div class="flex flex-c-c">
+											<div class="i-down"></div>
+												<input type="text" name="offLineDays" class="num-input" value="1">
+											<div class="i-up"></div>
+											<span class="num-ft">天</span>
+										</div>
+									</td>
+								</tr>
+							</table>
+							<div class="fm-btn-box flex flex-r-c flex-c-c">
+								<button class="btn-no" >取消</button>
+								<button class="btn-save" onclick="alarmConfigInfo.saveOffLine()">保存</button>
+							</div>
+						</div>
+					</div>
+					<!--设备离线模块  结束-->
+
+
+					<!--三相电告警模块  开始-->
+					<div class="wb-box" style="margin-top: 4rem;height: 40.5625rem;display: none" id="sxdModel">
+						<div class="wb-box-tit">
+							<span>告警配置</span>
+							<div class="chk-right flex flex-c-c">
+								<span>告警开关</span>
+								<label class="ui-switch">
+									<input type="checkbox" name="alarmSwitch" checked>
+								</label>
+							</div>
+						</div>
+						<div class="wb-box-main">
+							<table class="ifr-g-box" style="width: auto;margin-top:30px;">
+								<tr>
+									<td>通知方式</td>
+									<td><select class="fm-input" name="inform" >
+										<option value="短信">短信</option>
+										<option value="钉钉">钉钉</option>
+										<option value="邮件">邮件</option>
+									</select></td>
+
+								</tr>
+							</table>
+							<!--三相电告警配置	开始-->
+							<div>
+								<table class="ifr-table" id="box-lise-table" lay-filter="box-lise-table"></table>
+							</div>
+							<br>
+							<!--三相电告警配置	结束-->
+							<div class="fm-btn-box flex flex-r-c flex-c-c">
+								<button class="btn-no" >取消</button>
+								<button class="btn-save" onclick="alarmConfigInfo.saveBox()">保存</button>
+							</div>
+						</div>
+					</div>
+					<!--三相电告警模块  结束-->
+
+					<!--异常开关告警模块  开始-->
+					<div class="wb-box" style="margin-top: 4rem;height: 40.5625rem;display: none" id="yckgModel">
+						<div class="wb-box-tit">
+							<span>告警配置</span>
+							<div class="chk-right flex flex-c-c">
+								<span>告警开关</span>
+								<label class="ui-switch">
+									<input type="checkbox" name="alarmSwitch" checked>
+								</label>
+							</div>
+						</div>
+						<div class="wb-box-main">
+							<table class="ifr-g-box" style="width: auto;margin-top:30px;">
+								<tr>
+									<td>通知方式</td>
+									<td><select class="fm-input" name="inform">
+										<option value="短信">短信</option>
+										<option value="钉钉">钉钉</option>
+										<option value="邮件">邮件</option>
+									</select></td>
+
+								</tr>
+							</table>
+							<div class="fm-btn-box flex flex-r-c flex-c-c">
+								<button class="btn-no" >取消</button>
+								<button class="btn-save" onclick="alarmConfigInfo.saveSwitch()">保存</button>
+							</div>
+						</div>
+					</div>
+					<!--异常开关告警模块  结束-->
+
+
+					<!--回路电流告警模块  开始-->
+					<div class="wb-box" style="margin-top: 4rem;height: 40.5625rem;display: none" id="hldlModel">
+						<div class="wb-box-tit">
+							<span>告警配置</span>
+							<div class="chk-right flex flex-c-c">
+								<span>告警开关</span>
+								<label class="ui-switch">
+									<input type="checkbox" name="alarmSwitch" checked>
+								</label>
+							</div>
+						</div>
+						<div class="wb-box-main">
+							<table class="ifr-g-box" style="width: auto;margin-top:30px;">
+								<tr>
+									<td>通知方式</td>
+									<td><select class="fm-input" name="inform">
+										<option value="短信">短信</option>
+										<option value="钉钉">钉钉</option>
+										<option value="邮件">邮件</option>
+									</select></td>
+
+								</tr>
+							</table>
+							<!--回路电流配置列表-->
+							<div>
+								<table class="ifr-table" id="current-lise-table" lay-filter="current-lise-table"></table>
+							</div>
+							<div class="fm-btn-box flex flex-r-c flex-c-c">
+								<button class="btn-no" >取消</button>
+								<button class="btn-save" onclick="alarmConfigInfo.saveCurrent()">保存</button>
+							</div>
+						</div>
+					</div>
+					<!--回路电流告警模块  结束-->
+
+					<!--穿梭框模块 开始-->
+					<div  class="wb-box" style="margin-top: 4rem;height: 40.5625rem;display: none" id="shuttleModel">
+						<div id="shuttleBox"></div>
+					</div>
+					<!--穿梭框模块 结束-->
+				</div>
+		</div>
+
+		<!--阈值设置的模态框  开始-->
+		<div class="modal" style="display: none" id="currentModal" >
+			<div class="modal-cnt modal-form" >
+				<div class="modal-tit">回路电流阈值设置</div>
+				<div class="layui-form modal-main" lay-filter="currentFrom">
+					<input type="hidden" name="id" value="">
+					<input type="hidden" name="equipId" value="">
+					<input type="hidden" name="typeId" value="">
+					<input type="hidden" name="loopId" value="">
+					<br><br>
+					<table class="zn-t-table1" style="margin: 2rem auto">
+						<tr>
+							<td>回路电流阈值(A)：</td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<div class="flex fm-scx">
+								<input type="text" class="fm-input" name="currentMin">
+									&nbsp;
+								<input type="text" class="fm-input" name="currentMax">
+								</div>
+							</td>
+						</tr>
+					</table>
+					<br><br><br>
+					<div class="fm-btn-box flex flex-c-c flex-r-c">
+						<button class="btn-no">取消</button>
+						<button class="btn-save">保存</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--阈值设置的模态框  结束-->
+
+		<!--三相电设置的模态框  开始-->
+		<div class="modal boxModal" style="display: none" id="boxModal" >
+			<div class="modal-cnt modal-form" >
+				<div class="modal-tit">三相电阈值设置</div>
+				<div class="layui-form modal-main" lay-filter="boxFrom">
+					<input type="hidden" name="id" value="">
+					<input type="hidden" name="equipId" value="">
+					<input type="hidden" name="typeId" value="">
+					<br><br>
+					<table class="ifr-g-box" style="width: auto;margin-top:30px;">
+						<tr>
+							<td><button class="btn-g">阈值电压/V</button></td>
+						</tr>
+						<tr>
+							<td>A组：</td>
+							<td><div class="flex fm-scx"><input type="text" name="aVoltageMin" class="fm-input"><span>~</span><input type="text" name="aVoltageMax" class="fm-input"></div></td>
+							<td>B组：</td>
+							<td><div class="flex fm-scx"><input type="text" name="bVoltageMin" class="fm-input"><span>~</span><input type="text" name="bVoltageMax" class="fm-input"></div></td>
+							<td>C组：</td>
+							<td><div class="flex fm-scx"><input type="text" name="cVoltageMin" class="fm-input"><span>~</span><input type="text" name="cVoltageMax" class="fm-input"></div></td>
+						</tr>
+						<tr>
+							<td><button class="btn-r">阈值电流/A</button></td>
+						</tr>
+						<tr>
+							<td>A组：</td>
+							<td><div class="flex fm-scx"><input type="text" name="aElectricityMin" class="fm-input"><span>~</span><input type="text" name="aElectricityMax" class="fm-input"></div></td>
+							<td>B组：</td>
+							<td><div class="flex fm-scx"><input type="text" name="bElectricityMin" class="fm-input"><span>~</span><input type="text" name="bElectricityMax" class="fm-input"></div></td>
+							<td>C组：</td>
+							<td><div class="flex fm-scx"><input type="text" name="cElectricityMin" class="fm-input"><span>~</span><input type="text" name="cElectricityMax" class="fm-input"></div></td>
+						</tr>
+					</table>
+					<br><br><br>
+					<div class="fm-btn-box flex flex-c-c flex-r-c">
+						<button class="btn-no">取消</button>
+						<button class="btn-save">保存</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--三相电设置的模态框  结束-->
+
+		<script type="text/html" id="tableBarCurrent">
+			<button class="btn-g" lay-event="szCurrent">设置</button>
+		</script>
+
+		<script type="text/html" id="tableBarBox">
+			<button class="btn-g" lay-event="szBox">设置</button>
+		</script>
+	</div>
+@}
